@@ -10,7 +10,7 @@ public class SolarSystem {
     public void DebugSystem() {
         string v = "Star (" + star.classification + "), Size: " + star.size + ", NumPlanets: " + planets.Length + ", SurfaceTemp: " + star.temp + "K.";
         for (int i = 0; i < planets.Length; i++) {
-            v += " Planet " + (i + 1) + " is of size " + planets[i].size + ", is " + planets[i].distFromHost + " away from the sun, and has " + planets[i].numMoons + " moons.";
+            v += " Planet " + (i + 1) + " Size: " + planets[i].size + ", Dist: " + planets[i].distFromHost + ", Moons: " + planets[i].numMoons + ", tilt: " + planets[i].axialTilt;
         }
         Debug.Log(v);
 
@@ -44,7 +44,6 @@ public class Star {
     }
 
     private Color GetColor(char classification) {
-        //stars are of size 3 to 15. There are 7 classifications of star, thus each threshold increases by 12/7 or 0.28
 
         if (classification == 'M') return new Color(255, 189, 111);
         if (classification == 'K') return new Color(255, 221, 180);
@@ -57,7 +56,7 @@ public class Star {
     }
 
     private char GetClassification() {
-
+        //stars are of size 3 to 15. There are 7 classifications of star, thus each threshold increases by 12/7 or 0.28
         if (size >= 3f && size <= 4.7f) return 'M';
         if (size > 4.7f && size <= 6.4f) return 'K';
         if (size > 6.4f && size <= 8.1f) return 'G';
@@ -110,11 +109,13 @@ public class Planet {
     public float distFromHost;
     public int numMoons;
     public int planetType; //0 for terrestrial, 1 for gas giant
+    public float axialTilt;
 
-    public Planet(float size, float distFromHost, int numMoons, int type) {
+    public Planet(float size, float distFromHost, int numMoons, int type, float tilt) {
         this.size = size;
         this.distFromHost = distFromHost;
         this.numMoons = numMoons;
-        this.planetType = type;
+        planetType = type;
+        axialTilt = tilt;
     }
 }
