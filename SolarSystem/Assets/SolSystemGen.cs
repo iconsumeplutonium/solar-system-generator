@@ -8,6 +8,7 @@ public class SolSystemGen : MonoBehaviour {
     public SolarSystem system;
     public UIManager uiManager;
     public int seed;
+    public float planetaryOffset;
 
     public Transform sunPos;
 
@@ -59,7 +60,7 @@ public class SolSystemGen : MonoBehaviour {
             //the first planet from the sun is going to be the point at the edge of the star minus the planets size, minus a specified minimum distance away from that class of star
             //every other planet will be the previous planet's position minus the previous planet's size, minus a random distance between 5 and 25;
             //once text system is made, it might be obvious that the first planets are all the same distances. might need to add a bit of randomness to it
-            float dist = (i == 0) ? 8.54f - (system.star.size / 2f) - pSize - system.star.planet1MinDistance : system.planets[i - 1].distFromHost - system.planets[i - 1].size - (rng.Next(100, 500) / 100f) * 5f;
+            float dist = (i == 0) ? 8.54f - (system.star.size / 2f) - pSize - system.star.planet1MinDistance : system.planets[i - 1].distFromHost - system.planets[i - 1].size - ((rng.Next(100, 500) / 100f) * 5f) - planetaryOffset;
             int numMoons = rng.Next(1, 3);
 
             float axialTilt = rng.Next(1, 360);
