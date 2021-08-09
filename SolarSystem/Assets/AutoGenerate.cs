@@ -22,7 +22,7 @@ public class AutoGenerate : Editor
             for (int i = 0; i < bodies.Length; i++) {
 				DestroyImmediate(bodies[i]);
             }
-
+			
 			s.seed = Random.Range(int.MinValue, int.MaxValue);
 			s.system = new SolarSystem();
 			s.CreateSolarSystem();
