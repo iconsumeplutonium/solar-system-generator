@@ -10,9 +10,9 @@ public class SolarSystem {
     public void DebugSystem() {
         string v = "Star (" + star.classification + "), Size: " + star.size + ", NumPlanets: " + planets.Length + ", SurfaceTemp: " + star.temp + "K.";
         for (int i = 0; i < planets.Length; i++) {
-            v += " Planet " + (i + 1) + " Size: " + planets[i].size + ", Dist: " + planets[i].distFromHost + ", Moons: " + planets[i].numMoons + ", tilt: " + planets[i].axialTilt;
+            v += " Planet " + (i + 1) + " (T" + planets[i].planetType + "), Size: " + planets[i].size + ", Dist: " + planets[i].distFromHost + ", Moons: " + planets[i].numMoons + ", tilt: " + planets[i].axialTilt;
         }
-        Debug.Log(v);
+        //Debug.Log(v);
 
     }
 
@@ -78,7 +78,7 @@ public class Star {
 
     private float GetMinPlanetDistance(char classification) {
 
-        if (classification == 'M') return 2.31f;
+        if (classification == 'M') return 4f; //increased from 2.31
         if (classification == 'K') return 4.34f;
         if (classification == 'G') return 4.85f;
         if (classification == 'F') return 6.97f;
@@ -108,14 +108,23 @@ public class Planet {
     public float size;
     public float distFromHost;
     public int numMoons;
+    //0 ice
+    //1 dry
+    //2 martian
+    //3 rock
+    //4 venusian
+    //5 volcanic
+    //6 gas giant
     public int planetType; //0 for terrestrial, 1 for gas giant
     public float axialTilt;
+    public Material mat;
 
-    public Planet(float size, float distFromHost, int numMoons, int type, float tilt) {
+    public Planet(float size, float distFromHost, int numMoons, int type, float tilt, Material mat) {
         this.size = size;
         this.distFromHost = distFromHost;
         this.numMoons = numMoons;
         planetType = type;
         axialTilt = tilt;
+        this.mat = mat;
     }
 }
