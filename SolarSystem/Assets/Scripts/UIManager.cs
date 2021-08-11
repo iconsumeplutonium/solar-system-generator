@@ -72,9 +72,20 @@ public class UIManager : MonoBehaviour
         Camera.main.orthographic = true;
         Camera.main.fieldOfView = 70;
         hasSelectedPlanet = false;
-        SetSelectionCircle(true);
+        UIUtilities.SetSelectionCircle(true);
         overviewUIObj.SetActive(true);
         planetInfoObj.SetActive(false);
+    }
+
+    public void OnNewSystem() {
+        GameObject[] bodies = GameObject.FindGameObjectsWithTag("Celestial");
+        for (int i = 0; i < bodies.Length; i++) {
+            DestroyImmediate(bodies[i]);
+        }
+
+        ssg.seed = Random.Range(int.MinValue, int.MaxValue);
+        ssg.system = new SolarSystem();
+        ssg.CreateSolarSystem();
     }
 
 
@@ -82,12 +93,27 @@ public class UIManager : MonoBehaviour
 
     #region get information
     public string DisplaySystemInfo() {
-        string s = "Name: \nClassification: " + ssg.system.star.classification + "\nDiameter: " + ssg.system.star.size + "\nNumber of Planets: " + ssg.system.planets.Length + "\nSurface Temperature: " + ssg.system.star.temp + "K";
+        string s = "Name: \nClassification: " + ssg.system.star.classification + "-class Star";
+
+        bool isBorOclass = ssg.system.star.classification == 'O' || ssg.system.star.classification == 'B';
+        long size = UIUtilities.ConvertStarSizeToMiles(ssg.system.star.size, isBorOclass);
+        s += "\nDiameter: " + size.ToString("N0");
+        s += "\nNumber of Planets: " + ssg.system.planets.Length;
+        s += "\nSurface Temperature: " + ssg.system.star.temp + "K";
         return s;
     }
 
     public string DisplayPlanetInfo(int index) {
-        string s = "Name: \nSize: " + ssg.system.planets[index].size + "\nDistance from Host Star: " + ssg.system.planets[index].distFromHost + "\nNumber of Moons: " + ssg.system.planets[index].numMoons + "\nPlanet Type: " + ssg.system.planets[index].planetType + "\nTilt: " + ssg.system.planets[index].axialTilt;
+        bool isGasGiant = ssg.system.planets[index].planetType == 6;
+        long size = UIUtilities.ConvertSizeToMiles(ssg.system.planets[index].size, isGasGiant);
+        string s = "Name: \nSize: " + size.ToString("N0");
+
+        long miles = UIUtilities.ConvertDistanceToMiles(Mathf.Abs(ssg.system.planets[index].distFromHost));
+        s += "\nDistance from Host Star: " + miles.ToString("N0");
+
+        s += "\nNumber of Moons: " + ssg.system.planets[index].numMoons;
+        s += "\nPlanet Type: " + ssg.system.planets[index].planetType;
+        s += "\nTilt: " + ssg.system.planets[index].axialTilt;
         return s;
     }
     #endregion
@@ -96,12 +122,12 @@ public class UIManager : MonoBehaviour
         if (!hasSelectedPlanet) {
             Ray ray = Camera.main.ScreenPointToRay(mousePos);
             if (Physics.Raycast(ray, out RaycastHit hit, 100f)) {
-                int index = GetPlanetIndexOnRayCast(hit.transform.name) - 1;
+                int index = UIUtilities.GetPlanetIndexOnRayCast(hit.transform.name) - 1;
                 //7.71 is the furthest away the camera can be from a planet, or at Z = -14.36
                 //set it to perspective and change FOV to 34
                 //camera should be 1.818 less on the X axis than the planet
                 hasSelectedPlanet = true;
-                SetSelectionCircle(false);
+                UIUtilities.SetSelectionCircle(false);
                 planetInfoObj.SetActive(true);
                 overviewUIObj.SetActive(false);
                 previousCamPos = Camera.main.transform.position;
@@ -130,7 +156,7 @@ public class UIManager : MonoBehaviour
     public void MousePlanetHighlight() {
         Ray ray = Camera.main.ScreenPointToRay(mousePos);
         if (Physics.Raycast(ray, out RaycastHit hit, 100f)) {
-            GameObject selectionCircle = GetChildObject(hit.transform, "SelectionCircle");
+            GameObject selectionCircle = UIUtilities.GetChildObject(hit.transform, "SelectionCircle");
             selectionCircle.SetActive(true);
             previousSelection = selectionCircle;
         } else {
@@ -138,36 +164,6 @@ public class UIManager : MonoBehaviour
                 previousSelection.SetActive(false);
         }
     }
-
-    #region utility functions
-    private GameObject GetChildObject(Transform parent, string _tag) {
-        for (int i = 0; i < parent.childCount; i++) {
-            Transform child = parent.GetChild(i);
-            if (child.tag == _tag)
-                return child.gameObject;
-        }
-        return null;
-    }
-
-    private int GetPlanetIndexOnRayCast(string name) {
-        char[] nameInChars = name.ToCharArray();
-        for (int i = 0; i < nameInChars.Length; i++) {
-            if (char.IsDigit(nameInChars[i]))
-                return int.Parse(nameInChars[i].ToString());
-        }
-        return 0;
-
-    }
-
-
-    private void SetSelectionCircle(bool val) {
-        GameObject[] obj1 = GameObject.FindGameObjectsWithTag("SelectionCircle");
-        for (int i = 0; i < obj1.Length; i++) {
-            obj1[i].SetActive(val);
-        }
-    }
-
-    #endregion
 
     public IEnumerator ZoomToLocation(Vector3 targetLocation) {
         while (Camera.main.transform.position != targetLocation) {
