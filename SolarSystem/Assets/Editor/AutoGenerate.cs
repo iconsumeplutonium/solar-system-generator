@@ -28,7 +28,7 @@ public class AutoGenerate : Editor
 			s.CreateSolarSystem();
 			s.system.DebugSystem();
 
-			s.uiManager.DisplaySystemInfo();
+			//s.uiManager.DisplaySystemInfo();
 		}
 	}
 }

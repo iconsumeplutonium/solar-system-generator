@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Celestial
+  - SelectionCircle
+  - OverviewUI
   layers:
   - Default
   - TransparentFX

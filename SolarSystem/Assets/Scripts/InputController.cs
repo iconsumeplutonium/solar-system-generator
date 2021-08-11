@@ -22,4 +22,8 @@ public class InputController : MonoBehaviour
         controls.User.LeftClick.performed += ctx => manager.OnLeftClick(mPos);
     }
 
+    private void Update() {
+        manager.mousePos = mPos;
+    }
+
 }

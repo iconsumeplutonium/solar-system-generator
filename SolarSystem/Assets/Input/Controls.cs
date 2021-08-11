@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Controls.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/Input/Controls.inputactions'
 
 using System;
 using System.Collections;
@@ -41,6 +41,14 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Escape"",
+                    ""type"": ""Button"",
+                    ""id"": ""dbd072d3-b936-430e-953c-504af56b1710"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -76,6 +84,17 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""action"": ""MouseY"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3ee2e3a9-a3f9-43bd-bdad-80b167d6a072"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Schema"",
+                    ""action"": ""Escape"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -104,6 +123,7 @@ public class @Controls : IInputActionCollection, IDisposable
         m_User_LeftClick = m_User.FindAction("LeftClick", throwIfNotFound: true);
         m_User_MouseX = m_User.FindAction("MouseX", throwIfNotFound: true);
         m_User_MouseY = m_User.FindAction("MouseY", throwIfNotFound: true);
+        m_User_Escape = m_User.FindAction("Escape", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -156,6 +176,7 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputAction m_User_LeftClick;
     private readonly InputAction m_User_MouseX;
     private readonly InputAction m_User_MouseY;
+    private readonly InputAction m_User_Escape;
     public struct UserActions
     {
         private @Controls m_Wrapper;
@@ -163,6 +184,7 @@ public class @Controls : IInputActionCollection, IDisposable
         public InputAction @LeftClick => m_Wrapper.m_User_LeftClick;
         public InputAction @MouseX => m_Wrapper.m_User_MouseX;
         public InputAction @MouseY => m_Wrapper.m_User_MouseY;
+        public InputAction @Escape => m_Wrapper.m_User_Escape;
         public InputActionMap Get() { return m_Wrapper.m_User; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -181,6 +203,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @MouseY.started -= m_Wrapper.m_UserActionsCallbackInterface.OnMouseY;
                 @MouseY.performed -= m_Wrapper.m_UserActionsCallbackInterface.OnMouseY;
                 @MouseY.canceled -= m_Wrapper.m_UserActionsCallbackInterface.OnMouseY;
+                @Escape.started -= m_Wrapper.m_UserActionsCallbackInterface.OnEscape;
+                @Escape.performed -= m_Wrapper.m_UserActionsCallbackInterface.OnEscape;
+                @Escape.canceled -= m_Wrapper.m_UserActionsCallbackInterface.OnEscape;
             }
             m_Wrapper.m_UserActionsCallbackInterface = instance;
             if (instance != null)
@@ -194,6 +219,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @MouseY.started += instance.OnMouseY;
                 @MouseY.performed += instance.OnMouseY;
                 @MouseY.canceled += instance.OnMouseY;
+                @Escape.started += instance.OnEscape;
+                @Escape.performed += instance.OnEscape;
+                @Escape.canceled += instance.OnEscape;
             }
         }
     }
@@ -212,5 +240,6 @@ public class @Controls : IInputActionCollection, IDisposable
         void OnLeftClick(InputAction.CallbackContext context);
         void OnMouseX(InputAction.CallbackContext context);
         void OnMouseY(InputAction.CallbackContext context);
+        void OnEscape(InputAction.CallbackContext context);
     }
 }
