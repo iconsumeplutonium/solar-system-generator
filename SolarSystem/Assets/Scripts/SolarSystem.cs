@@ -27,6 +27,8 @@ public class Star {
     public float planet1MinDistance;
     public int temp;
 
+    public Vector3 posInWorldSpace;
+
     public Star(float s, int seed) {
         size = s;
         GenerateExtraneousDetails(seed);
@@ -116,9 +118,11 @@ public class Planet {
     //4 venusian
     //5 volcanic
     //6 gas giant
-    public int planetType; //0 for terrestrial, 1 for gas giant
+    public int planetType;
     public float axialTilt;
     public Material mat;
+
+    public Vector3 posInWorldSpace;
 
     public Planet(float size, float distFromHost, int numMoons, int type, float tilt, Material mat) {
         this.size = size;

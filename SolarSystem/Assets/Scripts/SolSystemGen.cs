@@ -95,6 +95,7 @@ public class SolSystemGen : MonoBehaviour {
         //transform
         star1.transform.position = sunPos.transform.position;
         star1.transform.localScale *= system.star.size;
+        system.star.posInWorldSpace = sunPos.transform.position;
 
         //color and bloom
         sunMat.color = system.star.c;
@@ -122,6 +123,7 @@ public class SolSystemGen : MonoBehaviour {
             //transform
             p.x = system.planets[i].distFromHost;
             o.transform.position = p;
+            system.planets[i].posInWorldSpace = p;
             o.transform.localScale *= system.planets[i].size;
 
             //looks

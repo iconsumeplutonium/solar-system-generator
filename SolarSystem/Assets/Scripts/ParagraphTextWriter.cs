@@ -5,17 +5,40 @@ using UnityEngine;
 public static class ParagraphTextWriter {
 
     public static string PlanetParagraphWriter(Planet planet, int seed, int index) {
-        string s = "";
+        string description = "";
         System.Random prng = new System.Random(seed);
 
         /*
         FORMAT: 
         1) name/planet index
-        2) planet type
-        3) axial tilt/number of moons
+        2) size/distance from host
+        3) planet type
+        4) axial tilt/number of moons
         
         */
 
+        description += Sentences.planetNameAndIndex[prng.Next(0, Sentences.planetNameAndIndex.Length)];
+        description += Sentences.planetSizeAndDistance[prng.Next(0, Sentences.planetSizeAndDistance.Length)];
+
+        description += planet.planetType switch {
+            0 => Sentences.IcePlanet[prng.Next(0, Sentences.IcePlanet.Length)],
+            1 => Sentences.DryPlanet[prng.Next(0, Sentences.DryPlanet.Length)],
+            2 => Sentences.MartianPlanet[prng.Next(0, Sentences.MartianPlanet.Length)],
+            3 => Sentences.RockPlanet[prng.Next(0, Sentences.RockPlanet.Length)],
+            4 => Sentences.VenusianPlanet[prng.Next(0, Sentences.VenusianPlanet.Length)],
+            5 => Sentences.VolcanicPlanet[prng.Next(0, Sentences.VolcanicPlanet.Length)],
+            _ => Sentences.GasGiant[prng.Next(0, Sentences.GasGiant.Length)],
+        };
+        description += Sentences.planetTiltAndMoons[prng.Next(0, Sentences.planetTiltAndMoons.Length)];
+
+        bool isGasGiant = (planet.planetType == 6);
+        string iThPlace = IndexToIthPlace(index);
+        string degrees = planet.axialTilt + " degrees";
+        string moons = planet.numMoons.ToString() + " moon(s)";
+        string size = UIUtilities.ConvertSizeToMiles(planet.size, isGasGiant).ToString("N0") + " miles";
+        string dist = UIUtilities.ConvertDistanceToMiles(Mathf.Abs(planet.distFromHost)).ToString("N0") + " miles";
+
+        string s = description.Replace("%NAME%", planet.name).Replace("%I%", iThPlace).Replace("%TILT%", degrees).Replace("%MOONS%", moons).Replace("%SIZE%", size).Replace("%DIST%", dist);
 
         return s;
     }
@@ -67,10 +90,25 @@ public static class ParagraphTextWriter {
         else if (system.star.classification == 'O')
             starClass = 2;
 
+        string class1 = system.star.classification.ToString();
+        string size = UIUtilities.ConvertStarSizeToMiles(system.star.size, starClass).ToString("N0") + " miles";
+        string temp = system.star.temp + "K";
+        string numberOfPlanets = system.planets.Length.ToString();
+
+
         //because theres no better way to replace all the the placeholders. thanks c#, very cool. 
-        string s1 = description.Replace("%%NAME%%", system.star.name).Replace("%%CLASS%%", system.star.classification.ToString()).Replace("%%SIZE%%", UIUtilities.ConvertStarSizeToMiles(system.star.size, starClass).ToString() + " miles").Replace("%%TEMP%%", system.star.temp + "K").Replace("%%NUMPLANETS%%", system.planets.Length.ToString());
+        string s1 = description.Replace("%NAME%", system.star.name).Replace("%CLASS%", class1).Replace("%SIZE%", size).Replace("%TEMP%", temp).Replace("%NUMPLANETS%", numberOfPlanets);
 
         return s1;
+    }
+
+    private static string IndexToIthPlace(int index) {
+        return index switch {
+            1 => "1st",
+            2 => "2nd",
+            3 => "3rd",
+            _ => index.ToString() + "th"
+        };
     }
 
 }

@@ -46,8 +46,6 @@ public static class UIUtilities {
             return (long)((units * 108602) / 50f);
     }
 
-    //B-class stars are slightly too big
-    //TODO: decouple O and B class star size calculations and adjust B-class star sizes
     //0: normal
     //1: B class
     //2: O class
@@ -59,6 +57,5 @@ public static class UIUtilities {
             _ => (long)((units * 497593) / 2f),
         };
     }
-
 
 }
