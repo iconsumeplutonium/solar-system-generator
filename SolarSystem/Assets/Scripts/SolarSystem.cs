@@ -13,13 +13,13 @@ public class SolarSystem {
             v += " Planet " + (i + 1) + " (T" + planets[i].planetType + "), Size: " + planets[i].size + ", Dist: " + planets[i].distFromHost + ", Moons: " + planets[i].numMoons + ", tilt: " + planets[i].axialTilt;
         }
         //Debug.Log(v);
-
     }
 
 }
 
 public class Star {
 
+    public string name;
     public float size;
     public Color c;
     public char classification;
@@ -105,6 +105,7 @@ public class Star {
 }
 
 public class Planet {
+    public string name;
     public float size;
     public float distFromHost;
     public int numMoons;

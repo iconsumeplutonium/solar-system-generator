@@ -48,10 +48,16 @@ public static class UIUtilities {
 
     //B-class stars are slightly too big
     //TODO: decouple O and B class star size calculations and adjust B-class star sizes
-    public static long ConvertStarSizeToMiles(float units, bool isBorOClass) {
-        if (isBorOClass)
-            return (long)((units * 497593) / 2f);
-        else return (long)((units * 497593) / 8.1f);
+    //0: normal
+    //1: B class
+    //2: O class
+    public static long ConvertStarSizeToMiles(float units, int starClass) {
+
+        return starClass switch {
+            0 => (long)((units * 497593) / 8.1f),
+            1 => (long)((units * 497593) / 2.5f),
+            _ => (long)((units * 497593) / 2f),
+        };
     }
 
 

@@ -64,16 +64,30 @@ public class SolSystemGen : MonoBehaviour {
 
             // to prevent ice planets from existing near the sun
             int type = (dist <= -885.512f) ? rng.Next(0, 7) : rng.Next(1, 7);
-            //terrestrial size 1 to 3, gas giant size 3 to 5
+            //terrestrial size 1 to 3 (plus variation), gas giant size 3 to 5
             float pSize = (type == 6) ? (rng.Next(150, 251) / 100f) * 2f : ((rng.Next(50, 151) / 100f) * 2f) + (offset_rng.Next(-10000, 5001) / 10000f);
 
 
             int numMoons = rng.Next(1, 4);
             float axialTilt = rng.Next(1, 360);
-            Material m = GetMaterial(type, seed);
+
+            //if the planet is smaller than a certain size, it should always be rock
+            Material m = (pSize <= 1.3) ? textureManager.RockMaterial[1] : GetMaterial(type, seed);
 
             system.planets[i] = new Planet(pSize, dist, numMoons, type, axialTilt, m);
         }
+
+        //create star and planet names
+        System.Random nrng = new System.Random(seed);
+        for (int i = 0; i < system.planets.Length + 1; i++) {
+            int newSeed = nrng.Next(int.MinValue, int.MaxValue);
+            if (i == 0)
+                system.star.name = WordInventor.InventCelestialName(newSeed);
+            else
+                system.planets[i - 1].name = WordInventor.InventCelestialName(newSeed);
+        }
+
+
 
         //Spawn the star
         GameObject star1 = GameObject.CreatePrimitive(PrimitiveType.Sphere);

@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
     public GameObject planetInfoObj;
     public TMP_Text planetInfoHeader;
     public TMP_Text planetInfo;
+    public TMP_Text infoParagraph;
 
     public GameObject overviewUIObj;
 
@@ -23,6 +24,7 @@ public class UIManager : MonoBehaviour
     GameObject previousSelection;
 
     public bool hasSelectedPlanet;
+    bool transitionCoroutineIsActive = false;
 
     public Vector3 previousCamPos;
 
@@ -66,15 +68,17 @@ public class UIManager : MonoBehaviour
     }
 
     public void OnPlanetInfoMenuBackButtonPressed() {
-        Vector3 newCamPos = new Vector3(Mathf.Max(-10, Camera.main.transform.position.x - 1.181f), Camera.main.transform.position.y, Camera.main.transform.position.z);
-        //Camera.main.transform.position = newCamPos;
-        StartCoroutine(ZoomToLocation(previousCamPos));
-        Camera.main.orthographic = true;
-        Camera.main.fieldOfView = 70;
-        hasSelectedPlanet = false;
-        UIUtilities.SetSelectionCircle(true);
-        overviewUIObj.SetActive(true);
-        planetInfoObj.SetActive(false);
+        if (!transitionCoroutineIsActive) { //only let the button be pressed if we're not in the middle of a transition
+            Vector3 newCamPos = new Vector3(Mathf.Max(-10, Camera.main.transform.position.x - 1.181f), Camera.main.transform.position.y, Camera.main.transform.position.z);
+            //Camera.main.transform.position = newCamPos;
+            StartCoroutine(ZoomToLocation(previousCamPos));
+            Camera.main.orthographic = true;
+            Camera.main.fieldOfView = 70;
+            hasSelectedPlanet = false;
+            UIUtilities.SetSelectionCircle(true);
+            overviewUIObj.SetActive(true);
+            planetInfoObj.SetActive(false);
+        }
     }
 
     public void OnNewSystem() {
@@ -82,6 +86,7 @@ public class UIManager : MonoBehaviour
         for (int i = 0; i < bodies.Length; i++) {
             DestroyImmediate(bodies[i]);
         }
+        scrubber.value = 0f;
 
         ssg.seed = Random.Range(int.MinValue, int.MaxValue);
         ssg.system = new SolarSystem();
@@ -93,20 +98,29 @@ public class UIManager : MonoBehaviour
 
     #region get information
     public string DisplaySystemInfo() {
-        string s = "Name: \nClassification: " + ssg.system.star.classification + "-class Star";
+        string s = "Name: " + ssg.system.star.name;
+        s += "\nClassification: " + ssg.system.star.classification + "-class Star";
 
-        bool isBorOclass = ssg.system.star.classification == 'O' || ssg.system.star.classification == 'B';
-        long size = UIUtilities.ConvertStarSizeToMiles(ssg.system.star.size, isBorOclass);
+        int starClass = 0;
+        if (ssg.system.star.classification == 'B')
+            starClass = 1;
+        else if (ssg.system.star.classification == 'O')
+            starClass = 2;
+
+        long size = UIUtilities.ConvertStarSizeToMiles(ssg.system.star.size, starClass);
         s += "\nDiameter: " + size.ToString("N0");
         s += "\nNumber of Planets: " + ssg.system.planets.Length;
         s += "\nSurface Temperature: " + ssg.system.star.temp + "K";
+
         return s;
     }
 
     public string DisplayPlanetInfo(int index) {
+        string s = "Name: " + ssg.system.planets[index].name;
+
         bool isGasGiant = ssg.system.planets[index].planetType == 6;
         long size = UIUtilities.ConvertSizeToMiles(ssg.system.planets[index].size, isGasGiant);
-        string s = "Name: \nSize: " + size.ToString("N0");
+        s += "\nSize: " + size.ToString("N0");
 
         long miles = UIUtilities.ConvertDistanceToMiles(Mathf.Abs(ssg.system.planets[index].distFromHost));
         s += "\nDistance from Host Star: " + miles.ToString("N0");
@@ -148,6 +162,7 @@ public class UIManager : MonoBehaviour
 
                     planetInfoHeader.text = "Star";
                     planetInfo.text = DisplaySystemInfo();
+                    infoParagraph.text = ParagraphTextWriter.StarParagraphWriter(ssg.system, ssg.seed);
                 }
             };
         }
@@ -166,10 +181,12 @@ public class UIManager : MonoBehaviour
     }
 
     public IEnumerator ZoomToLocation(Vector3 targetLocation) {
+        transitionCoroutineIsActive = true;
         while (Camera.main.transform.position != targetLocation) {
             Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position, targetLocation, 1f);
             yield return new WaitForSeconds(0.05f);
         }
+        transitionCoroutineIsActive = false;
     }
 
 }
