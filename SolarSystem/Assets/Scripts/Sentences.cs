@@ -108,6 +108,7 @@ public class Sentences {
 
     #endregion
 
+    #region Planet sentences
     //%NAME%
     //%I%
     //%TYPE%
@@ -234,4 +235,6 @@ public class Sentences {
         "Currently, %MOONS% orbit %NAME%, and it is tilted at an angle of %TILT%. ",
         "%MOONS% orbit %NAME%, which has an axial tilt of %TILT%. "
     };
+    
+    #endregion
 }

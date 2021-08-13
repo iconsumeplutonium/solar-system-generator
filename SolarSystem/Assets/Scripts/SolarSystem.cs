@@ -32,7 +32,6 @@ public class Star {
     public Star(float s, int seed) {
         size = s;
         GenerateExtraneousDetails(seed);
-        //this.c = c;
     }
 
     public void GenerateExtraneousDetails(int seed) {

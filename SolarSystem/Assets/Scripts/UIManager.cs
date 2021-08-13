@@ -42,11 +42,26 @@ public class UIManager : MonoBehaviour
     private void Update() {
         if (!hasSelectedPlanet) {
             if (ssg.system.planets.Length > 0) {
+                //reenable the slider because it could still be disabled
+                scrubber.gameObject.SetActive(true);
+
+                //move the camera with the slider only if we have not selected a planet and the system actually has planets
                 float endVal = ssg.system.planets[ssg.system.planets.Length - 1].distFromHost;
                 Vector3 newCamPos = Camera.main.transform.position;
                 newCamPos.x = -10f - scrubber.value * (-10 - endVal);
 
                 Camera.main.transform.position = newCamPos;
+
+                //if all the planets in the system are already on the screen (eg a system with only 1 planet), disable the slider
+                if (ssg.system.planets[ssg.system.planets.Length - 1].posInWorldSpace.x >= -30f)
+                    scrubber.gameObject.SetActive(false);
+                else if(!scrubber.gameObject.activeInHierarchy)
+                    scrubber.gameObject.SetActive(true);
+                //-1748538022
+
+            } else {
+                //if the system has no planets, disable the slider
+                scrubber.gameObject.SetActive(false);
             }
             MousePlanetHighlight();
         }
@@ -118,7 +133,12 @@ public class UIManager : MonoBehaviour
 
     public void OnPlanetInfoMenuBackButtonPressed() {
         if (!transitionCoroutineIsActive) { //only let the button be pressed if we're not in the middle of a transition
-            StartCoroutine(ZoomToLocation(previousCamPos, 1f));
+            
+            //no coroutine because it doesnt work and causes the camera to jitter for some reason
+            //i love coding ._.
+            //StartCoroutine(ZoomToLocation(previousCamPos, 1f));
+            Camera.main.transform.position = previousCamPos;
+
             Camera.main.orthographic = true;
             Camera.main.fieldOfView = 70;
             hasSelectedPlanet = false;
@@ -129,37 +149,42 @@ public class UIManager : MonoBehaviour
     }
 
     public void OnNewSystem() {
-        GameObject[] bodies = GameObject.FindGameObjectsWithTag("Celestial");
-        for (int i = 0; i < bodies.Length; i++) {
-            DestroyImmediate(bodies[i]);
-        }
-        scrubber.value = 0f;
+        if (!transitionCoroutineIsActive) {
+            GameObject[] bodies = GameObject.FindGameObjectsWithTag("Celestial");
+            for (int i = 0; i < bodies.Length; i++) {
+                DestroyImmediate(bodies[i]);
+            }
+            scrubber.value = 0f;
 
-        ssg.seed = Random.Range(int.MinValue, int.MaxValue);
-        seedInputField.text = ssg.seed.ToString();
-        ssg.system = new SolarSystem();
-        ssg.CreateSolarSystem();
+            ssg.seed = Random.Range(int.MinValue, int.MaxValue);
+            seedInputField.text = ssg.seed.ToString();
+            ssg.system = new SolarSystem();
+            ssg.CreateSolarSystem();
+        }
     }
 
     public void OnUserInputNewSeed() {
-        GameObject[] bodies = GameObject.FindGameObjectsWithTag("Celestial");
-        for (int i = 0; i < bodies.Length; i++) {
-            DestroyImmediate(bodies[i]);
-        }
-        scrubber.value = 0f;
+        if (!transitionCoroutineIsActive) {
+            GameObject[] bodies = GameObject.FindGameObjectsWithTag("Celestial");
+            for (int i = 0; i < bodies.Length; i++) {
+                DestroyImmediate(bodies[i]);
+            }
+            scrubber.value = 0f;
 
-        if (!int.TryParse(seedInputField.text, out _)) {
-            seed_error.gameObject.SetActive(true);
-        } else {
-            ssg.seed = int.Parse(seedInputField.text);
+            if (!int.TryParse(seedInputField.text, out _)) {
+                seed_error.gameObject.SetActive(true);
+            }
+            else {
+                ssg.seed = int.Parse(seedInputField.text);
 
-            seedInputField.text = ssg.seed.ToString();
+                seedInputField.text = ssg.seed.ToString();
 
-            if (seed_error.gameObject.activeInHierarchy)
-                seed_error.gameObject.SetActive(false);
+                if (seed_error.gameObject.activeInHierarchy)
+                    seed_error.gameObject.SetActive(false);
 
-            ssg.system = new SolarSystem();
-            ssg.CreateSolarSystem();
+                ssg.system = new SolarSystem();
+                ssg.CreateSolarSystem();
+            }
         }
     }
 
