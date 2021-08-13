@@ -19,6 +19,10 @@ public class UIManager : MonoBehaviour
 
     public GameObject overviewUIObj;
 
+    public TMP_InputField seedInputField;
+
+    public TMP_Text seed_error;
+
     [HideInInspector]
     public Vector2 mousePos;
     GameObject previousSelection;
@@ -31,6 +35,7 @@ public class UIManager : MonoBehaviour
     int currentPlanetIndex;
 
     private void Start() {
+        seedInputField.text = ssg.seed.ToString();
         //DisplayStarInfo();
     }
 
@@ -129,10 +134,32 @@ public class UIManager : MonoBehaviour
         scrubber.value = 0f;
 
         ssg.seed = Random.Range(int.MinValue, int.MaxValue);
+        seedInputField.text = ssg.seed.ToString();
         ssg.system = new SolarSystem();
         ssg.CreateSolarSystem();
     }
 
+    public void OnUserInputNewSeed() {
+        GameObject[] bodies = GameObject.FindGameObjectsWithTag("Celestial");
+        for (int i = 0; i < bodies.Length; i++) {
+            DestroyImmediate(bodies[i]);
+        }
+        scrubber.value = 0f;
+
+        if (!int.TryParse(seedInputField.text, out _)) {
+            seed_error.gameObject.SetActive(true);
+        } else {
+            ssg.seed = int.Parse(seedInputField.text);
+
+            seedInputField.text = ssg.seed.ToString();
+
+            if (seed_error.gameObject.activeInHierarchy)
+                seed_error.gameObject.SetActive(false);
+
+            ssg.system = new SolarSystem();
+            ssg.CreateSolarSystem();
+        }
+    }
 
     #endregion
 

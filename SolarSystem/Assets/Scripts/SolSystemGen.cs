@@ -25,18 +25,10 @@ public class SolSystemGen : MonoBehaviour {
 
     public bool autoUpdate;
 
-    //private void OnValidate() {
-    //    GameObject[] bodies = GameObject.FindGameObjectsWithTag("Celestial");
-    //    for (int i = 0; i < bodies.Length; i++) {
-    //        Destroy(bodies[i]);
-    //    }
-    //    system = new SolarSystem();
-    //    CreateSolarSystem();
-    //    system.DebugSystem();
-    //}
 
 
     private void Awake() {
+        seed = Random.Range(int.MinValue, int.MaxValue);
         system = new SolarSystem();
         CreateSolarSystem();
         //system.DebugSystem();
