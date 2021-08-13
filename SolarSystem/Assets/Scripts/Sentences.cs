@@ -13,7 +13,7 @@ public class Sentences {
     //%NUMPLANETS%
 
     public static string[] starNameAndClass = new string[] {
-        "This solar system is home to a %CLASS%-class star named %NAME%.",
+        "This solar system is home to a %CLASS%-class star named %NAME%. ",
         "This system's main resident is a %CLASS%-class star named %NAME%. ",
         "At the center of this system is a star called %NAME%, with a stellar classification of %CLASS%. ",
         "An %CLASS%-class star named %NAME% has taken up residence in this star system. ",
@@ -55,7 +55,7 @@ public class Sentences {
 
     public static string[] BClassStarDescription = new string[] {
         "The second largest class of star, %NAME% is large and bright enough to be seen in the night sky with a naked eye. ",
-        "%NAME%, due to being a B-class main sequence star is so big that it will die pretty young. Rest in Piece %NAME%, you probably won't be missed. "
+        "Because %NAME% is a B-class star, it will die pretty young due to its very large mass. "
     };
 
     public static string[] OClassStarDescription = new string[] {
@@ -90,8 +90,7 @@ public class Sentences {
         "This star has no planets orbiting it. How boring.",
         "This lonely star has nothing orbiting around it. ",
         "Zero planets orbit this star. ",
-        "Nothing orbits this star. ",
-        "This star has the rare property of not having any planets orbiting it. "
+        "Nothing orbits this star. "
     };
 
     public static string[] starWithPlanets = new string[] { 
@@ -209,7 +208,7 @@ public class Sentences {
         "Seas of lava created by %NAME%'s hundreds of volcanoes are so large that they are visible from space. ",
         "Curiously, despite %NAME% having hundreds of volcanoes, most of its mountains are caused by plate tectonics rather than volcanism. ",
         "Almost all of the mountains on %NAME%'s surface were formed by the extensive volcanism present on its surface. ",
-        "Boasting a thin atmosphere and hundreds of volcanoes, %NAME%'s surface maintains temperatures of hundreds of degrees",
+        "Boasting a thin atmosphere and hundreds of volcanoes, %NAME%'s surface maintains temperatures of hundreds of degrees. ",
         "The extensive volcanism boasted by %NAME% seems to imply that it was formed relatively recently: only a few hundred million years ago. ",
         "The geologically active crust and mantle of %NAME% seems to indicate that it is a relatively young planet compared to others within this system. "
     };
@@ -232,6 +231,7 @@ public class Sentences {
     public static string[] planetTiltAndMoons = new string[] {
         "%NAME% sits at a tilt of %TILT%, with %MOONS% orbiting it. ",
         "It is tilted at an angle of %TILT%, and is surrounded by %MOONS%. ",
-        "Currently, %MOONS% orbit %NAME%, and it is tilted at an angle of %TILT%. "
+        "Currently, %MOONS% orbit %NAME%, and it is tilted at an angle of %TILT%. ",
+        "%MOONS% orbit %NAME%, which has an axial tilt of %TILT%. "
     };
 }

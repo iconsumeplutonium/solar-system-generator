@@ -66,29 +66,11 @@ public class UIManager : MonoBehaviour
     #region button press functions
 
     public void OnNextPlanetButtonPressed() {
-        if(currentPlanetIndex + 1 <= ssg.system.planets.Length - 1) {
-            currentPlanetIndex++;
+        if (!transitionCoroutineIsActive) {
+            if (currentPlanetIndex + 1 <= ssg.system.planets.Length - 1) {
+                currentPlanetIndex++;
 
 
-            Vector3 planetPos = ssg.system.planets[currentPlanetIndex].posInWorldSpace;
-            Vector3 target = new Vector3(planetPos.x + 1.818f, planetPos.y, planetPos.z + 14.36f);
-
-            Camera.main.fieldOfView = 34;
-            Camera.main.orthographic = false;
-            StartCoroutine(ZoomToLocation(target, 5f));
-
-            planetInfoHeader.text = "Planet " + (currentPlanetIndex + 1);
-            planetInfo.text = DisplayPlanetInfo(currentPlanetIndex);
-            infoParagraph.text = ParagraphTextWriter.PlanetParagraphWriter(ssg.system.planets[currentPlanetIndex], ssg.seed, currentPlanetIndex + 1);
-
-        }
-    }
-
-    public void OnPreviousPlanetButtonPressed() {
-        if (currentPlanetIndex - 1 >= -1) {
-            currentPlanetIndex--;
-
-            if (currentPlanetIndex >= 0) { //if planet
                 Vector3 planetPos = ssg.system.planets[currentPlanetIndex].posInWorldSpace;
                 Vector3 target = new Vector3(planetPos.x + 1.818f, planetPos.y, planetPos.z + 14.36f);
 
@@ -99,23 +81,43 @@ public class UIManager : MonoBehaviour
                 planetInfoHeader.text = "Planet " + (currentPlanetIndex + 1);
                 planetInfo.text = DisplayPlanetInfo(currentPlanetIndex);
                 infoParagraph.text = ParagraphTextWriter.PlanetParagraphWriter(ssg.system.planets[currentPlanetIndex], ssg.seed, currentPlanetIndex + 1);
-            }
-            else { // if sun
-                Vector3 target = new Vector3(19.02f, 1, 20.1f);
-                StartCoroutine(ZoomToLocation(target, 5f));
 
-                planetInfoHeader.text = "Star";
-                planetInfo.text = DisplayStarInfo();
-                infoParagraph.text = ParagraphTextWriter.StarParagraphWriter(ssg.system, ssg.seed);
             }
+        }
+    }
 
+    public void OnPreviousPlanetButtonPressed() {
+        if (!transitionCoroutineIsActive) {
+            if (currentPlanetIndex - 1 >= -1) {
+                currentPlanetIndex--;
+
+                if (currentPlanetIndex >= 0) { //if planet
+                    Vector3 planetPos = ssg.system.planets[currentPlanetIndex].posInWorldSpace;
+                    Vector3 target = new Vector3(planetPos.x + 1.818f, planetPos.y, planetPos.z + 14.36f);
+
+                    Camera.main.fieldOfView = 34;
+                    Camera.main.orthographic = false;
+                    StartCoroutine(ZoomToLocation(target, 5f));
+
+                    planetInfoHeader.text = "Planet " + (currentPlanetIndex + 1);
+                    planetInfo.text = DisplayPlanetInfo(currentPlanetIndex);
+                    infoParagraph.text = ParagraphTextWriter.PlanetParagraphWriter(ssg.system.planets[currentPlanetIndex], ssg.seed, currentPlanetIndex + 1);
+                }
+                else { // if sun
+                    Vector3 target = new Vector3(19.02f, 1, 20.1f);
+                    StartCoroutine(ZoomToLocation(target, 5f));
+
+                    planetInfoHeader.text = "Star";
+                    planetInfo.text = DisplayStarInfo();
+                    infoParagraph.text = ParagraphTextWriter.StarParagraphWriter(ssg.system, ssg.seed);
+                }
+
+            }
         }
     }
 
     public void OnPlanetInfoMenuBackButtonPressed() {
         if (!transitionCoroutineIsActive) { //only let the button be pressed if we're not in the middle of a transition
-            Vector3 newCamPos = new Vector3(Mathf.Max(-10, Camera.main.transform.position.x - 1.181f), Camera.main.transform.position.y, Camera.main.transform.position.z);
-            //Camera.main.transform.position = newCamPos;
             StartCoroutine(ZoomToLocation(previousCamPos, 1f));
             Camera.main.orthographic = true;
             Camera.main.fieldOfView = 70;
@@ -193,14 +195,14 @@ public class UIManager : MonoBehaviour
         s += "\nDistance from Host Star: " + miles.ToString("N0") + " miles";
 
         s += "\nNumber of Moons: " + ssg.system.planets[index].numMoons;
-        s += "\nPlanet Type: " + ssg.system.planets[index].planetType;
-        s += "\nTilt: " + ssg.system.planets[index].axialTilt;
+        s += "\nPlanet Type: " + UIUtilities.GetPlanetType(ssg.system.planets[index].planetType);
+        s += "\nTilt: " + ssg.system.planets[index].axialTilt + "°";
         return s;
     }
     #endregion
 
     public void OnLeftClick(Vector2 mousePos) {
-        if (!hasSelectedPlanet) {
+        if (!hasSelectedPlanet && !transitionCoroutineIsActive) {
             Ray ray = Camera.main.ScreenPointToRay(mousePos);
             if (Physics.Raycast(ray, out RaycastHit hit, 100f)) {
                 currentPlanetIndex = UIUtilities.GetPlanetIndexOnRayCast(hit.transform.name) - 1;
@@ -237,14 +239,17 @@ public class UIManager : MonoBehaviour
     }
 
     public void MousePlanetHighlight() {
-        Ray ray = Camera.main.ScreenPointToRay(mousePos);
-        if (Physics.Raycast(ray, out RaycastHit hit, 100f)) {
-            GameObject selectionCircle = UIUtilities.GetChildObject(hit.transform, "SelectionCircle");
-            selectionCircle.SetActive(true);
-            previousSelection = selectionCircle;
-        } else {
-            if (previousSelection != null)
-                previousSelection.SetActive(false);
+        if (!transitionCoroutineIsActive) {
+            Ray ray = Camera.main.ScreenPointToRay(mousePos);
+            if (Physics.Raycast(ray, out RaycastHit hit, 100f)) {
+                GameObject selectionCircle = UIUtilities.GetChildObject(hit.transform, "SelectionCircle");
+                selectionCircle.SetActive(true);
+                previousSelection = selectionCircle;
+            }
+            else {
+                if (previousSelection != null)
+                    previousSelection.SetActive(false);
+            }
         }
     }
 

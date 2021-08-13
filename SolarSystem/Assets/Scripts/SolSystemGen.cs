@@ -50,15 +50,20 @@ public class SolSystemGen : MonoBehaviour {
         for (int i = 0; i < system.planets.Length; i++) {
 
             //the first planet from the sun is going to be the point at the edge of the star minus the planets size, minus a specified minimum distance away from that class of star
-            //every other planet will be the previous planet's position minus the previous planet's size, minus a random distance between 5 and 25;
-            //TODO: once text system is made, it might be obvious that the first planets are all the same distances. might need to add a bit of randomness to it
+            //every other planet will be the previous planet's position minus the previous planet's size, minus a random distance between 5 and 25 (36.5 million and 182.5 million miles);
             float dist = (i == 0) ? 8.54f - (system.star.size / 2f) /*- pSize*/ - system.star.planet1MinDistance : system.planets[i - 1].distFromHost - system.planets[i - 1].size - ((rng.Next(100, 500) / 100f) * 5f) - planetaryOffset;
 
             // to prevent ice planets from existing near the sun
-            int type = (dist <= -885.512f) ? rng.Next(0, 7) : rng.Next(1, 7);
+            int type = (dist <= -100f) ? rng.Next(0, 7) : rng.Next(1, 7);
+
+            //if a terrestrial planet is more than 3.2 billion miles away from its star, it will always be an icy planet.
+            //exception: the planet is smaller than 2823.652 miles in diameter (size 1.3 in unity's arbitrary measurements), see the line where the planet's material is assigned
+            if (dist <= -438.26f && type != 6)
+                type = 0;
+
+
             //terrestrial size 1 to 3 (plus variation), gas giant size 3 to 5
             float pSize = (type == 6) ? (rng.Next(150, 251) / 100f) * 2f : ((rng.Next(50, 151) / 100f) * 2f) + (offset_rng.Next(-10000, 5001) / 10000f);
-
 
             int numMoons = rng.Next(1, 4);
             float axialTilt = rng.Next(1, 360);
@@ -70,6 +75,9 @@ public class SolSystemGen : MonoBehaviour {
         }
 
         //create star and planet names
+        //given a seed, the word inventor will always give you the same name, which becomes a problem as you dont want every celestial body to have the same name
+        //thus, the seed is used to create a list of new seeds, where each one corresponds to the star and planets
+        //that list of seeds is then used to generate a list of names for each celestial body
         System.Random nrng = new System.Random(seed);
         for (int i = 0; i < system.planets.Length + 1; i++) {
             int newSeed = nrng.Next(int.MinValue, int.MaxValue);

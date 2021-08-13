@@ -58,4 +58,8 @@ public static class UIUtilities {
         };
     }
 
+    public static string GetPlanetType(int type) {
+        return (type == 6) ? "Gas Giant" : "Terrestrial";
+    }
+
 }
