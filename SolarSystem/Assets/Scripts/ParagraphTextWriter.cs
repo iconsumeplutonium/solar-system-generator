@@ -32,7 +32,7 @@ public static class ParagraphTextWriter {
         };
         description += Sentences.planetTiltAndMoons[prng.Next(0, Sentences.planetTiltAndMoons.Length)];
 
-        bool isGasGiant = (planet.planetType == 6);
+        bool isGasGiant = (planet.planetType >= 6);
         string iThPlace = IndexToIthPlace(index);
         string degrees = planet.axialTilt + " degrees";
         string moons = planet.numMoons.ToString() + ((planet.numMoons != 1) ? " moons" : " moon");
