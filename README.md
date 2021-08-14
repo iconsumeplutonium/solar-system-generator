@@ -52,6 +52,7 @@ Once the star's properties have been generated, the algorithm then generates pro
 * 4: Venus-like
 * 5: Volcanic
 * 6: Gas Giant
+* 7: Ice Giant
 
 After this, it generates the planet's size (which is then used to determine its texture), followed by the number of moons and the amount to which the planet is tilted. 
 
