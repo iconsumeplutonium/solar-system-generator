@@ -24,7 +24,7 @@ public class Sentences {
 
     public static string[] MClassStarDescription = new string[] {
         "M-class stars like %NAME% are some of the smallest types of star in the universe. ",
-        "M-class stars, aka 'Red Dwarfs', are the smallest classification of star. ",
+        "M-class stars, aka 'Red Dwarfs', are the smallest class of star. ",
         "%NAME%, like other M-class stars, has such a low luminosity that it cannot be seen in the night sky with an unaided eye. ",
         "Red Dwarfs like %NAME% are some of the most common types of star in the Milky Way. "
     };
@@ -33,13 +33,13 @@ public class Sentences {
         "K-Class stars like %NAME% are slightly cooler than our own sun. ",
         "K-type main sequence stars like %NAME% are slightly bigger than M-class stars. ",
         "%NAME% and other K-class stars are smaller than G-class stars like our own sun. ",
-        "%NAME% and its K-class brethren are good candidates in the search for alien life due to the amount of time they are stable. "
+        "%NAME% and its K-class brethren are good candidates in the search for alien life due as they spend millions of years stable. "
     };
 
     public static string[] GClassStarDescription = new string[] {
         "%NAME% is a sibling to our own Sun, as they are both G-class stars. ",
         "Our own sun and %NAME% both share the same classification of G-class stars. ",
-        "Our sun and %%NAME% are both G-class stars. For more information on G-class stars, stare directly into the sun.",
+        "Our sun and %NAME% are both G-class stars. For more information on G-class stars, stare directly into the sun.",
         "G-class stars, like %NAME%, will undergo fusion for about 10 billion years before collapsing into itself and forming a supernova. "
     };
 

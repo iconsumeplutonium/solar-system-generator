@@ -65,7 +65,7 @@ public class SolSystemGen : MonoBehaviour {
             //terrestrial size 1 to 3 (plus variation), gas giant size 3 to 5
             float pSize = (type == 6) ? (rng.Next(150, 251) / 100f) * 2f : ((rng.Next(50, 151) / 100f) * 2f) + (offset_rng.Next(-10000, 5001) / 10000f);
 
-            int numMoons = rng.Next(1, 4);
+            int numMoons = rng.Next(0, 4);
             float axialTilt = rng.Next(1, 360);
 
             //if the planet is smaller than a certain size, it should always be rock
