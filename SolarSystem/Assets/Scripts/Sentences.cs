@@ -227,6 +227,21 @@ public class Sentences {
         "%NAME% has a very large magnetosphere, which is responsible for intense radio emission from its poles. ",
         "The intense pressure of its atmosphere causes its temperature to reach thousands of degrees the closer you get to its core. "
     };
+
+    public static string[] IceGiant = new string[] {
+        "Ice Giants like %NAME% are different from gas giants due to the fact that it is made of heavier elements, such as oxygen and nitrogen. ",
+        "%NAME% and other ice giants are primarily made up of heavier elements such as carbon, nitrogen, and oxygen. ",
+        "%NAME% is made up of only around 20% hydrogen and helium by mass, making it an ice giant rather than a gas giant. ",
+        "The blues and cyans in %NAME%'s atmosphere is caused by the 'ices' present in its atmosphere, such as water ice, ammonia, and methane. ",
+        "Ice giants like %NAME% also possess long-lasting storms, similar to the storms present on gas giants. ",
+        "%NAME's core is actually composed of solid rock and ice, rather than the solid hydrogen cores of gas giants. ",
+        "The cores of ice giants like %NAME% are actually composed of solid rock and ice. ",
+        "Due to the atmospheric pressure of %NAME%'s atmosphere, the interior of the planet can reach temperatures in the thousands of Kelvin. ",
+        "Not much is known about the interior of %NAME%, or ice giants in general. ",
+        "Due to their lack of hydrogen, ice giants are the category of planet that we know the least about. ",
+        "Winds on %NAME% can reach speeds of thousands of miles an hour. ",
+    };
+
     #endregion
 
     public static string[] planetTiltAndMoons = new string[] {

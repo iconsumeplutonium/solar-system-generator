@@ -17,9 +17,6 @@ public class SolSystemGen : MonoBehaviour {
     public GameObject selectCanvas;
 
     public Material sunMat;
-    public Material planetMat_terrestrial;
-
-    public Material[] GasGiantTextures;
 
     public PostProcessVolume ppv;
 
@@ -41,9 +38,9 @@ public class SolSystemGen : MonoBehaviour {
         ppv.profile.TryGetSettings(out bloom);
         
         //stars are of size 3 to 15
-        float size = (prng.Next(60, 300) / 100f) * 5f;
+        float size = (prng.Next(60, 301) / 100f) * 5f;
         system.star = new Star(size, seed);
-        system.planets = new Planet[prng.Next(0, 10)];
+        system.planets = new Planet[prng.Next(0, 11)];
 
         System.Random rng = new System.Random(seed);
         System.Random offset_rng = new System.Random(seed);
@@ -51,25 +48,26 @@ public class SolSystemGen : MonoBehaviour {
 
             //the first planet from the sun is going to be the point at the edge of the star minus the planets size, minus a specified minimum distance away from that class of star
             //every other planet will be the previous planet's position minus the previous planet's size, minus a random distance between 5 and 25 (36.5 million and 182.5 million miles);
-            float dist = (i == 0) ? 8.54f - (system.star.size / 2f) /*- pSize*/ - system.star.planet1MinDistance : system.planets[i - 1].distFromHost - system.planets[i - 1].size - ((rng.Next(100, 500) / 100f) * 5f) - planetaryOffset;
+            float dist = (i == 0) ? 8.54f - (system.star.size / 2f) /*- pSize*/ - system.star.planet1MinDistance : system.planets[i - 1].distFromHost - system.planets[i - 1].size - ((rng.Next(100, 501) / 100f) * 5f) - planetaryOffset;
 
             // to prevent ice planets from existing near the sun
-            int type = (dist <= -100f) ? rng.Next(0, 7) : rng.Next(1, 7);
+            int type = (dist <= -100f) ? rng.Next(0, 8) : rng.Next(1, 8);
 
             //if a terrestrial planet is more than 3.2 billion miles away from its star, it will always be an icy planet.
             //exception: the planet is smaller than 2823.652 miles in diameter (size 1.3 in unity's arbitrary measurements), see the line where the planet's material is assigned
-            if (dist <= -438.26f && type != 6)
+            if (dist <= -438.26f && (type != 6 && type != 7))
                 type = 0;
 
 
-            //terrestrial size 1 to 3 (plus variation), gas giant size 3 to 5
-            float pSize = (type == 6) ? (rng.Next(150, 251) / 100f) * 2f : ((rng.Next(50, 151) / 100f) * 2f) + (offset_rng.Next(-10000, 5001) / 10000f);
+            //terrestrial size 1 to 3 (plus variation), gas/ice giant size 3 to 5
+            float pSize = (type >= 6) ? (rng.Next(150, 251) / 100f) * 2f : ((rng.Next(50, 151) / 100f) * 2f) + (offset_rng.Next(-10000, 5001) / 10000f);
 
-            int numMoons = rng.Next(0, 4);
+            //gas giants and ice giants can have more moons
+            int numMoons = (type >= 6) ? rng.Next(0, 71) : rng.Next(0, 5);
             float axialTilt = rng.Next(1, 360);
 
             //if the planet is smaller than a certain size, it should always be rock
-            Material m = (pSize <= 1.3) ? textureManager.RockMaterial[1] : GetMaterial(type, seed);
+            Material m = (pSize <= 1.3f) ? textureManager.RockMaterial[1] : GetMaterial(type, seed);
 
             system.planets[i] = new Planet(pSize, dist, numMoons, type, axialTilt, m);
         }
@@ -133,7 +131,11 @@ public class SolSystemGen : MonoBehaviour {
             o.transform.eulerAngles = new Vector3(0, 0, system.planets[i].axialTilt);
 
             //inspector stuff
-            string t = (system.planets[i].planetType == 6) ? " (Gas Giant)" : " (Terrestrial)";
+            string t = " (Terrestrial)";
+            if (system.planets[i].planetType == 6)
+                t = " (Gas Giant)";
+            if (system.planets[i].planetType == 7)
+                t = " (Ice Giant)";
             o.name = "Planet " + (i + 1) + t;
             o.isStatic = true;
             o.tag = "Celestial"; 
@@ -160,7 +162,8 @@ public class SolSystemGen : MonoBehaviour {
             3 => textureManager.RockMaterial[mrng.Next(0, textureManager.RockMaterial.Length)],
             4 => textureManager.VenusianMaterial[mrng.Next(0, textureManager.VenusianMaterial.Length)],
             5 => textureManager.VolcanicMaterial[mrng.Next(0, textureManager.VolcanicMaterial.Length)],
-            _ => textureManager.GasGiantMaterial[mrng.Next(0, textureManager.GasGiantMaterial.Length)],
+            6 => textureManager.GasGiantMaterial[mrng.Next(0, textureManager.GasGiantMaterial.Length)],
+            _ => textureManager.IceGiantMaterial[mrng.Next(0, textureManager.IceGiantMaterial.Length)],
         };
     }
 

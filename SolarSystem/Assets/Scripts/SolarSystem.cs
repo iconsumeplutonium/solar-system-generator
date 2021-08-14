@@ -117,6 +117,7 @@ public class Planet {
     //4 venusian
     //5 volcanic
     //6 gas giant
+    //7 ice giant
     public int planetType;
     public float axialTilt;
     public Material mat;

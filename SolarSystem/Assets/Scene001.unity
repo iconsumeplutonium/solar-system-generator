@@ -3191,33 +3191,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiManager: {fileID: 1845213753}
   textureManager: {fileID: 1845213754}
-  seed: 1771048276
+  seed: -1344778924
   planetaryOffset: 75
   sunPos: {fileID: 2079060689}
   selectCanvas: {fileID: 3899999372087674123, guid: 369572c55860f3046813bd8ebcb3758a, type: 3}
   sunMat: {fileID: 2100000, guid: 1971dd49d0559e54181d153f79672f25, type: 2}
-  planetMat_terrestrial: {fileID: 2100000, guid: 5254298aef58e284ebc4a69841f3aacc, type: 2}
-  GasGiantTextures:
-  - {fileID: 2100000, guid: 8afd6d91648743c4492c618f948b5d70, type: 2}
-  - {fileID: 2100000, guid: 95a27cbfa4dcb4848ba188b3898268a2, type: 2}
-  - {fileID: 2100000, guid: f75baf0c0d83ec24fb523cb85edd4fdc, type: 2}
-  - {fileID: 2100000, guid: 7e12790cdfbfed54290790fe6e932007, type: 2}
-  - {fileID: 2100000, guid: 0f36a73fc61dd654e98551e801051a65, type: 2}
-  - {fileID: 2100000, guid: f74118870725c2f439d30b0a230317cf, type: 2}
-  - {fileID: 2100000, guid: 58b6ad9e9e895c44cb58f8b92666e2a8, type: 2}
-  - {fileID: 2100000, guid: b1652518aa7f5aa46b8f727288447e42, type: 2}
-  - {fileID: 2100000, guid: 5ec920fbf3687bc40aaa99741ea2ee2c, type: 2}
-  - {fileID: 2100000, guid: 5477a1776d3b08f49b760db780f1f5d2, type: 2}
-  - {fileID: 2100000, guid: 2e0ba030db947284da40ef3a078263cc, type: 2}
-  - {fileID: 2100000, guid: 64b94e87959b04b4eb19cfcf4a67773e, type: 2}
-  - {fileID: 2100000, guid: 72e0d8cf2b1d147428ae5d23981a3726, type: 2}
-  - {fileID: 2100000, guid: ee000053e5eafae4b8e8740646159e8b, type: 2}
-  - {fileID: 2100000, guid: 7b266d1f8098d864db160e133bdc58d1, type: 2}
-  - {fileID: 2100000, guid: c3aab6223b532ad439c3c61bf5685fc4, type: 2}
-  - {fileID: 2100000, guid: 8ddf7f644643b604089ad73c7670c982, type: 2}
-  - {fileID: 2100000, guid: 4b343ce85e708c647930271b5d05952e, type: 2}
-  - {fileID: 2100000, guid: 385a188ff09b54149baceb1c60755899, type: 2}
-  - {fileID: 2100000, guid: 2177f220a8d87354893f07807b7f7915, type: 2}
   ppv: {fileID: 954720920}
   autoUpdate: 1
 --- !u!114 &1845213753
@@ -3315,6 +3293,16 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 4b343ce85e708c647930271b5d05952e, type: 2}
   - {fileID: 2100000, guid: 385a188ff09b54149baceb1c60755899, type: 2}
   - {fileID: 2100000, guid: 2177f220a8d87354893f07807b7f7915, type: 2}
+  IceGiantMaterial:
+  - {fileID: 2100000, guid: b6244106715bcd54ba80e5f10891a9f2, type: 2}
+  - {fileID: 2100000, guid: ea319332f65eb3647a78eb6f9a2ce460, type: 2}
+  - {fileID: 2100000, guid: 5b6af7816919b354e81379507037ed9c, type: 2}
+  - {fileID: 2100000, guid: fe5fa988ab384764e893ecb85578ee4c, type: 2}
+  - {fileID: 2100000, guid: 782fcaefef099c642881795fedcc9581, type: 2}
+  - {fileID: 2100000, guid: dbdb280e3e9a2284f8bea6f9fb402d1e, type: 2}
+  - {fileID: 2100000, guid: 1652952dc67cf1b4fa2dcdc4af94ad68, type: 2}
+  - {fileID: 2100000, guid: 2511a0f4370341a47ba4189dcd41616e, type: 2}
+  - {fileID: 2100000, guid: 9b8ded7241db9a54098e2658be7bbef0, type: 2}
 --- !u!114 &1845213755
 MonoBehaviour:
   m_ObjectHideFlags: 0

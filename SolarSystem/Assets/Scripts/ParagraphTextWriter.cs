@@ -27,14 +27,15 @@ public static class ParagraphTextWriter {
             3 => Sentences.RockPlanet[prng.Next(0, Sentences.RockPlanet.Length)],
             4 => Sentences.VenusianPlanet[prng.Next(0, Sentences.VenusianPlanet.Length)],
             5 => Sentences.VolcanicPlanet[prng.Next(0, Sentences.VolcanicPlanet.Length)],
-            _ => Sentences.GasGiant[prng.Next(0, Sentences.GasGiant.Length)],
+            6 => Sentences.GasGiant[prng.Next(0, Sentences.GasGiant.Length)],
+            _ => Sentences.IceGiant[prng.Next(0, Sentences.IceGiant.Length)],
         };
         description += Sentences.planetTiltAndMoons[prng.Next(0, Sentences.planetTiltAndMoons.Length)];
 
         bool isGasGiant = (planet.planetType == 6);
         string iThPlace = IndexToIthPlace(index);
         string degrees = planet.axialTilt + " degrees";
-        string moons = planet.numMoons.ToString() + " moon(s)";
+        string moons = planet.numMoons.ToString() + ((planet.numMoons != 1) ? " moons" : " moon");
         string size = UIUtilities.ConvertSizeToMiles(planet.size, isGasGiant).ToString("N0") + " miles";
         string dist = UIUtilities.ConvertDistanceToMiles(Mathf.Abs(planet.distFromHost)).ToString("N0") + " miles";
 
