@@ -12,4 +12,5 @@ public class TextureManager : MonoBehaviour {
     public Material[] VolcanicMaterial;
 
     public Material[] GasGiantMaterial;
+    public Material[] IceGiantMaterial;
 }

@@ -57,7 +57,7 @@ public class Star {
     }
 
     private char GetClassification() {
-        //stars are of size 3 to 15. There are 7 classifications of star, thus each threshold increases by 12/7 or 0.28
+        //stars are of size 3 to 15. There are 7 classifications of star, thus each threshold increases by 12/7 or 1.7
         if (size >= 3f && size <= 4.7f) return 'M';
         if (size > 4.7f && size <= 6.4f) return 'K';
         if (size > 6.4f && size <= 8.1f) return 'G';
