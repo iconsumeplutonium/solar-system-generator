@@ -218,7 +218,7 @@ public class Sentences {
         "Larger than most other planets, %NAME% is a gas giant with a very strong gravitational pull. ",
         "Due to being a gas giant, %NAME% is almost entirely comprised of gas, having no solid surface at all. ",
         "Though %NAME% may be a gas giant, it actually posesses a solid core due to the immense weight of the atmosphere. ",
-        "The immense pressure of the gasses in %NAME's upper atmosphere compresses its core into a solid state. ",
+        "The immense pressure of the gasses in %NAME%'s upper atmosphere compresses its core into a solid state. ",
         "The gasses in %NAME% are largely comprised of lighter elements such as hydrogen and helium. ",
         "The outermost sections of %NAME%'s atmosphere is contains some visible clouds, composed of water and ammonia. ",
         "%NAME% spins rapidly on its axis, causing its shape to slightly resemble an oblong spheroid. ",
