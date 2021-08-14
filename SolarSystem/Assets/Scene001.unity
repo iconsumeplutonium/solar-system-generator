@@ -3170,8 +3170,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1845213750}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: -33.2}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3191,11 +3191,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiManager: {fileID: 1845213753}
   textureManager: {fileID: 1845213754}
-  seed: -1344778924
+  seed: -390760477
   planetaryOffset: 75
   sunPos: {fileID: 2079060689}
   selectCanvas: {fileID: 3899999372087674123, guid: 369572c55860f3046813bd8ebcb3758a, type: 3}
   sunMat: {fileID: 2100000, guid: 1971dd49d0559e54181d153f79672f25, type: 2}
+  ringMat: {fileID: 2100000, guid: 84f08d0a37bb2994baa961d5910a647e, type: 2}
   ppv: {fileID: 954720920}
   autoUpdate: 1
 --- !u!114 &1845213753

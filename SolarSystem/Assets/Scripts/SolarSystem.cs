@@ -105,6 +105,8 @@ public class Star {
 
 }
 
+//i could probably create some sort of system where i have Terrestrial and Gas Giant classes that derive from the Planet class
+//but nah, thats too much work
 public class Planet {
     public string name;
     public float size;
@@ -124,12 +126,29 @@ public class Planet {
 
     public Vector3 posInWorldSpace;
 
-    public Planet(float size, float distFromHost, int numMoons, int type, float tilt, Material mat) {
+    public bool hasRings;
+    public float innerRadius;
+    public float thickness;
+
+    public Planet(float size, float distFromHost, int numMoons, int type, float tilt, Material mat, bool hasRings, int seed) {
         this.size = size;
         this.distFromHost = distFromHost;
         this.numMoons = numMoons;
         planetType = type;
         axialTilt = tilt;
         this.mat = mat;
+
+        this.hasRings = hasRings;
+        if (hasRings)
+            GenerateRingValues(seed);
     }
+
+    public void GenerateRingValues(int seed) {
+        System.Random rrng = new System.Random(seed);
+        //between 0.6 and 1
+        innerRadius = rrng.Next(600, 1001) / 1000f;
+        //between 0.03 and 0.9
+        thickness = rrng.Next(30, 901) / 1000f;
+    }
+
 }

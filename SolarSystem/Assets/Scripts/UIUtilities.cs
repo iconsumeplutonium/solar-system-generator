@@ -17,6 +17,7 @@ public static class UIUtilities {
         for (int i = 0; i < nameInChars.Length; i++) {
             if (char.IsDigit(nameInChars[i]))
                 return int.Parse(nameInChars[i].ToString());
+            //10 wont wokr here becues its 2 digits
         }
         return 0;
 

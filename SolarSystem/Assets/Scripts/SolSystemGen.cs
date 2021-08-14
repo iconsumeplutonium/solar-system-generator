@@ -17,6 +17,7 @@ public class SolSystemGen : MonoBehaviour {
     public GameObject selectCanvas;
 
     public Material sunMat;
+    public Material ringMat;
 
     public PostProcessVolume ppv;
 
@@ -40,7 +41,7 @@ public class SolSystemGen : MonoBehaviour {
         //stars are of size 3 to 15
         float size = (prng.Next(60, 301) / 100f) * 5f;
         system.star = new Star(size, seed);
-        system.planets = new Planet[prng.Next(0, 11)];
+        system.planets = new Planet[prng.Next(0, 10)];
 
         System.Random rng = new System.Random(seed);
         System.Random offset_rng = new System.Random(seed);
@@ -69,7 +70,11 @@ public class SolSystemGen : MonoBehaviour {
             //if the planet is smaller than a certain size, it should always be rock
             Material m = (pSize <= 1.3f) ? textureManager.RockMaterial[1] : GetMaterial(type, seed);
 
-            system.planets[i] = new Planet(pSize, dist, numMoons, type, axialTilt, m);
+            bool hasRings = false;
+            if (type >= 6)
+                hasRings = rng.Next(0, 2) == 0;
+
+            system.planets[i] = new Planet(pSize, dist, numMoons, type, axialTilt, m, hasRings, seed);
         }
 
         //create star and planet names
@@ -147,6 +152,15 @@ public class SolSystemGen : MonoBehaviour {
             Vector3 newLocalScale = o.transform.localScale / scale;
             selection.transform.localScale = (newLocalScale.x < 1) ? Vector3.one : newLocalScale;
             selection.SetActive(false);
+
+            //rings
+            if(system.planets[i].hasRings) {
+                PlanetRing ring =  o.AddComponent<PlanetRing>();
+                ring.segments = 100;
+                ring.ringMat = ringMat;
+                ring.SetUpRing();
+                ring.BuildRingMesh(system.planets[i].innerRadius, system.planets[i].thickness);
+            }
         }
 
 
