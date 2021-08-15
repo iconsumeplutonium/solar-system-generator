@@ -91,7 +91,7 @@ public class UIManager : MonoBehaviour
 
                 Camera.main.fieldOfView = 34;
                 Camera.main.orthographic = false;
-                StartCoroutine(ZoomToLocation(target, 5f));
+                StartCoroutine(ZoomToLocation(target));
 
                 planetInfoHeader.text = "Planet " + (currentPlanetIndex + 1);
                 planetInfo.text = DisplayPlanetInfo(currentPlanetIndex);
@@ -112,7 +112,7 @@ public class UIManager : MonoBehaviour
 
                     Camera.main.fieldOfView = 34;
                     Camera.main.orthographic = false;
-                    StartCoroutine(ZoomToLocation(target, 5f));
+                    StartCoroutine(ZoomToLocation(target));
 
                     planetInfoHeader.text = "Planet " + (currentPlanetIndex + 1);
                     planetInfo.text = DisplayPlanetInfo(currentPlanetIndex);
@@ -120,7 +120,7 @@ public class UIManager : MonoBehaviour
                 }
                 else { // if sun
                     Vector3 target = new Vector3(19.02f, 1, 20.1f);
-                    StartCoroutine(ZoomToLocation(target, 5f));
+                    StartCoroutine(ZoomToLocation(target));
 
                     planetInfoHeader.text = "Star";
                     planetInfo.text = DisplayStarInfo();
@@ -245,14 +245,14 @@ public class UIManager : MonoBehaviour
                     //Camera.main.transform.position = 
                     Camera.main.fieldOfView = 34;
                     Camera.main.orthographic = false;
-                    StartCoroutine(ZoomToLocation(target, 1f));
+                    StartCoroutine(ZoomToLocation(target));
 
                     planetInfoHeader.text = "Planet " + (currentPlanetIndex + 1);
                     planetInfo.text = DisplayPlanetInfo(currentPlanetIndex);
                     infoParagraph.text = ParagraphTextWriter.PlanetParagraphWriter(ssg.system.planets[currentPlanetIndex], ssg.seed, currentPlanetIndex + 1);
                 } else { // if sun
                     Vector3 target = new Vector3(hit.transform.position.x + 6.92f, hit.transform.position.y, hit.transform.position.z + 14.36f);
-                    StartCoroutine(ZoomToLocation(target, 1f));
+                    StartCoroutine(ZoomToLocation(target));
                     //Camera.main.transform.position = 
 
                     planetInfoHeader.text = "Star";
@@ -278,11 +278,11 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public IEnumerator ZoomToLocation(Vector3 targetLocation, float dist) {
+    public IEnumerator ZoomToLocation(Vector3 targetLocation) {
         transitionCoroutineIsActive = true;
         while (Camera.main.transform.position != targetLocation) {
-            Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position, targetLocation, dist);
-            yield return new WaitForSeconds(0.05f);
+            Camera.main.transform.position = Vector3.MoveTowards(Camera.main.transform.position, targetLocation, Time.deltaTime * 100);
+            yield return null;
         }
         transitionCoroutineIsActive = false;
     }
