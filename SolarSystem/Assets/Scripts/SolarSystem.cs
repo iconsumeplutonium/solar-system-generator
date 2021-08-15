@@ -79,13 +79,13 @@ public class Star {
 
     private float GetMinPlanetDistance(char classification) {
 
-        if (classification == 'M') return 4f; //increased from 2.31
-        if (classification == 'K') return 4.34f;
-        if (classification == 'G') return 4.85f;
-        if (classification == 'F') return 6.97f;
-        if (classification == 'A') return 8.03f;
-        if (classification == 'B') return 7.94f;
-        else return 10.17f; //O-class
+        if (classification == 'M') return 8f; //increased from 2.31
+        if (classification == 'K') return 8.34f;
+        if (classification == 'G') return 8.85f;
+        if (classification == 'F') return 10.97f;
+        if (classification == 'A') return 16.03f;
+        if (classification == 'B') return 17.94f;
+        else return 18.17f; //O-class
 
     }
 

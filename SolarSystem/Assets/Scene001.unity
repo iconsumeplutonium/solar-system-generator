@@ -3191,7 +3191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiManager: {fileID: 1845213753}
   textureManager: {fileID: 1845213754}
-  seed: -390760477
+  seed: -1609541357
   planetaryOffset: 75
   sunPos: {fileID: 2079060689}
   selectCanvas: {fileID: 3899999372087674123, guid: 369572c55860f3046813bd8ebcb3758a, type: 3}
