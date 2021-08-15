@@ -37,13 +37,13 @@ Hitting `back` will bring you back to the overview. The left and right buttons w
 
 # How it Works
 
-![explanation](https://cdn.discordapp.com/attachments/690652979036028929/875876449981202442/solar_system_explanation.png)
+![explanation](https://cdn.discordapp.com/attachments/690652979036028929/876581456422518904/solar_system_explanation.png)
 
 When a random seed is generated (or inputted by the user), it is used to seed a pseudorandom number generator. This causes the pseudorandom number generator to produce the same sequence of numbers every time.
 
 Following this logic, this program works by first using the random seed to seed one instance of the number generator. The first number drawn will the size of the star (between 3 units and 15 units). The second number drawn will be the number of planets (which will be between 0 planets and 10 planets). After this, the number generator will use the size of the star to get its [classification](https://en.wikipedia.org/wiki/Stellar_classification). The classification is then used to determine the color and temperature of the star. 
 
-Once the star's properties have been generated, the algorithm then generates properties for each planet of that star (assuming that the star has planets). A second instance of the random number generator is created and seeded. The first number it generates will be the planet's distance from its host star. Next, it generates a number between 0 and 6 which will be that planet's "type." 
+Once the star's properties have been generated, the algorithm then generates properties for each planet of that star (assuming that the star has planets). A second instance of the random number generator is created and seeded. The first number it generates will be the planet's distance from its host star. Next, it generates a number between 0 and 7 which will be that planet's "type." 
 
 * 0: Icy
 * 1: Dry
@@ -54,11 +54,11 @@ Once the star's properties have been generated, the algorithm then generates pro
 * 6: Gas Giant
 * 7: Ice Giant
 
-After this, it generates the planet's size (which is then used to determine its texture), followed by the number of moons and the amount to which the planet is tilted. 
+The planet type is used to generate the planet's size (which is then used to determine its texture). The planet type is also used to determine whether the planet has rings or not and the number of moons it has. Finally, it determines the degree to which the planet is tilted.  
 
 A third instance of the pseudorandom number generator is created and seeded and used to generate the names of each planet and star. The algorithm for this is the one I used in my [Word Inventor repository](https://github.com/iconsumeplutonium/word-inventor)
 
 A fourth instance of the pseudorandom number generator is created and seeded, and used to generate the description on each planet's info menu. This can be found in `Assets/Scripts/Sentences.cs` and `Assets/Scripts/ParagraphTextWriter.cs`
 
 
-The arbitrary Unity transform units used in the generation of the solar system are converted to miles (for size and distance) and Kelvin (for temperature) when the information for each celestial body is displayed on screen. 
+Planet ring script and texture by [boardtobits](https://github.com/boardtobits/planet-ring-mesh).
