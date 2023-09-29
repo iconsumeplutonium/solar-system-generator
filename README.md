@@ -12,7 +12,7 @@
 
 This program procedurally generates a solar system given a seed. It will also generate descriptions and (mostly) accurate properties of each planet and star
 
-![](https://cdn.discordapp.com/attachments/690652979036028929/875859511238328350/ezgif.com-gif-maker.gif)
+![](https://i.ibb.co/Ms4KpbS/system.gif)
 
 #### Project Files
 
@@ -22,43 +22,27 @@ This project was written in C# in version 2020.3.12f1 of the Unity engine. To ru
 
 When you open the program for the first time, you will be greeted by this screen.
 
-![menu](https://cdn.discordapp.com/attachments/690652979036028929/875866033641128006/unknown.png)
+![menu](https://i.imgur.com/lj6vCAy.png)
 
 You can use the scrub bar at the bottom to scroll across the solar system. (Note that the scrubber only appears on solar systems which needs the scrub bar, i.e. systems with more than 1 planet). 
 
-![system scrubber](https://cdn.discordapp.com/attachments/690652979036028929/875867799057231882/system_scrub_gif.gif)
+![system scrubber](https://i.ibb.co/vw1D3Pb/system-scrub-gif.gif)
 
 Hovering your mouse cursor over any planet or star will bring up a white circle highlight around it. Left clicking it once it is highlighted will bring up a menu panel providing details about that particular celestial body. 
 
-![planet menu](https://cdn.discordapp.com/attachments/690652979036028929/875866611318399046/unknown.png)
+![planet menu](https://i.imgur.com/k1MbY18.png)
 
 Hitting `back` will bring you back to the overview. The left and right buttons will let you jump to the next and previous planet/star. 
 
 
-# How it Works
 
-![explanation](https://cdn.discordapp.com/attachments/690652979036028929/876581456422518904/solar_system_explanation.png)
+Star properties include its [classification](https://en.wikipedia.org/wiki/Stellar_classification) (which determine color and temperature) and the number of planets. 
+
+The properties of each planet include the distance from its host star, type (icy, dry, Mars-like, rocky, Venus-like, volcanic, gas giant, or ice giant), size, whether it has rings or not, number of moons, and its planetary tilt.
+
+The names of the planets and stars are generated via the algorithm in my [Word Inventor](https://github.com/iconsumeplutonium/word-inventor) program.
 
 When a random seed is generated (or inputted by the user), it is used to seed a pseudorandom number generator. This causes the pseudorandom number generator to produce the same sequence of numbers every time.
-
-Following this logic, this program works by first using the random seed to seed one instance of the number generator. The first number drawn will the size of the star (between 3 units and 15 units). The second number drawn will be the number of planets (which will be between 0 planets and 10 planets). After this, the number generator will use the size of the star to get its [classification](https://en.wikipedia.org/wiki/Stellar_classification). The classification is then used to determine the color and temperature of the star. 
-
-Once the star's properties have been generated, the algorithm then generates properties for each planet of that star (assuming that the star has planets). A second instance of the random number generator is created and seeded. The first number it generates will be the planet's distance from its host star. Next, it generates a number between 0 and 7 which will be that planet's "type." 
-
-* 0: Icy
-* 1: Dry
-* 2: Mars-like 
-* 3: Rocky
-* 4: Venus-like
-* 5: Volcanic
-* 6: Gas Giant
-* 7: Ice Giant
-
-The planet type is used to generate the planet's size (which is then used to determine its texture). The planet type is also used to determine whether the planet has rings or not and the number of moons it has. Finally, it determines the degree to which the planet is tilted.  
-
-A third instance of the pseudorandom number generator is created and seeded and used to generate the names of each planet and star. The algorithm for this is the one I used in my [Word Inventor repository](https://github.com/iconsumeplutonium/word-inventor)
-
-A fourth instance of the pseudorandom number generator is created and seeded, and used to generate the description on each planet's info menu. This can be found in `Assets/Scripts/Sentences.cs` and `Assets/Scripts/ParagraphTextWriter.cs`
 
 
 Planet ring script and texture by [boardtobits](https://github.com/boardtobits/planet-ring-mesh).
