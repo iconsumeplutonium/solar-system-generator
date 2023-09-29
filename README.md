@@ -1,22 +1,17 @@
 - [Procedural Solar System Generator](#procedural-solar-system-generator)
       
      - [Description](#description)
-     
-     - [Project Files](#project-files)
+
 - [How to Use](#how-to-use)
-- [How it Works](#how-it-works)
+
 
 # Procedural Solar System Generator
 
 #### Description
 
-This program procedurally generates a solar system given a seed. It will also generate descriptions and (mostly) accurate properties of each planet and star
+This program procedurally generates a solar system given a seed. It will also generate descriptions and (mostly) accurate properties of each planet and star. Made in version 2020.3.12f1 of the Unity engine. 
 
 ![](https://i.ibb.co/Ms4KpbS/system.gif)
-
-#### Project Files
-
-This project was written in C# in version 2020.3.12f1 of the Unity engine. To run the program, download the project files and run the Solar System Generator shortcut in the `Solar System/` folder. 
 
 # How to Use
 
